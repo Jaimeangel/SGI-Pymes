@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'stock_product',
     'cliente',
     'supplier',
+    'order_sale',
     'rest_framework'
 ]
 

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'cliente',
     'supplier',
     'order_sale',
+    'order_supplier',
     'rest_framework'
 ]
 

@@ -3,9 +3,22 @@ from supplier.models import Supplier
 from stock_product.models import Product
 
 class OrderSupplier(models.Model):
+    INPROGRESS = 'INPROGRESS'
+    COMPLETED = 'COMPLETED'
+    
+    STATE_CHOICES = [
+        (INPROGRESS, 'INPROGRESS'),
+        (COMPLETED, 'COMPLETED'),
+    ]
+    
+
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    state = models.CharField(max_length=255)
+    state = models.CharField(
+        max_length=10,
+        choices=STATE_CHOICES,
+        default=INPROGRESS,
+    )
     total_value = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def update_total_value(self):

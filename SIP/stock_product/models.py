@@ -20,7 +20,7 @@ class Product(models.Model):
             Stock.objects.create(product=self, current_stock=0)
 
     def __str__(self):
-        return self.name
+        return f"id-product:{self.id} -- {self.name}"
 
 class Stock(models.Model):
     product = models.OneToOneField(Product, on_delete=models.CASCADE, primary_key=True)
@@ -28,4 +28,4 @@ class Stock(models.Model):
     last_update = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.product.name
+        return f"id-product:{self.product.id} -- {self.product.name}"

@@ -1,6 +1,7 @@
 from django.db import models
 from cliente.models import Client
 from stock_product.models import Product
+from decimal import Decimal
 
 class OrderSale(models.Model):
     INPROGRESS = 'INPROGRESS'
@@ -33,10 +34,15 @@ class OrderSaleDetail(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     sale_price = models.DecimalField(max_digits=10, decimal_places=2,null=True)
+    total_detail = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def save(self, *args, **kwargs):
         if not self.sale_price:
             self.sale_price = self.product.price_sale
+        
+        # Calcular total_detail
+        self.total_detail = Decimal(self.sale_price) * self.quantity
+
         super().save(*args, **kwargs)
         self.order_sale.update_total_value()
 

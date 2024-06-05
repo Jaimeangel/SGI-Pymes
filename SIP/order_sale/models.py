@@ -46,6 +46,11 @@ class OrderSaleDetail(models.Model):
         super().save(*args, **kwargs)
         self.order_sale.update_total_value()
 
+    def delete(self, *args, **kwargs):
+        order_sale = self.order_sale
+        super().delete(*args, **kwargs)
+        order_sale.update_total_value()
+
     def __str__(self):
         return f"Order Detail {self.id} - Product: {self.product.name}, Quantity: {self.quantity}, Sale Price: {self.sale_price}"
         

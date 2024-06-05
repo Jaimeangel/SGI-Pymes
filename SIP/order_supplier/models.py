@@ -44,5 +44,10 @@ class OrderSupplierDetail(models.Model):
         super().save(*args, **kwargs)
         self.order_supplier.update_total_value()
 
+    def delete(self, *args, **kwargs):
+        order_supplier = self.order_supplier
+        super().delete(*args, **kwargs)
+        order_supplier.update_total_value()
+
     def __str__(self):
         return f"Order Detail {self.id} - Supplier: {self.product.name}, Quantity: {self.quantity}, Sale Price: {self.purchase_price}"

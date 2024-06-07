@@ -42,8 +42,16 @@ INSTALLED_APPS = [
     'supplier',
     'order_sale',
     'order_supplier',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework.authtoken',
+    'authentication'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

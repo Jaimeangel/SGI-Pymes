@@ -68,6 +68,8 @@ table {
 }
 
 .btn_options{
+    width: 100%;
+    cursor: pointer;
     padding: 10px 20px;
     border-radius: 5px;
     border: none;
@@ -80,6 +82,7 @@ table {
 }
 
 .btn_options:hover{
+    width: 100%;
     background-color: #fdfbf8;
     color: black;
 }
@@ -137,4 +140,13 @@ table {
 .render_content{
     width: 100%;
     overflow-y: auto;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.render_box{
+    width: 90%;
+    height: auto;
 }

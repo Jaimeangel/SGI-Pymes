@@ -1,45 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title  %}{% endblock  %}</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static "css/index.css" %}" type="text/css" >
-</head>
-<body>
-    <div class="container">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title  %}{% endblock  %}</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static "index.css" %}">
+        {% block head  %}
+        {% endblock  %}
+    </head>
+    <body>
+        <div class="container">
 
-        <div class="side_bar">
-            <div class="options">
-                <button class="btn_options">Inventario</button>
-                <button class="btn_options">Compras</button>
-                <button class="btn_options">Ventas</button>
-                <button class="btn_options">Clientes</button>
-                <button class="btn_options">Proveedores</button>
-            </div>
-        </div>
-
-        <div class="main_content">
-            <div class="nav_bar">
-                <div class="nav_bar_content">
-                    {% if user.is_authenticated %}
-                        <span class="subtitle">Bienvenido {{user.username}}</span>
-                        <a href="{% url 'logout' %}">
-                            <button type="button" class="btn logout">Cerrar sesión</button>
-                        </a>
-                    {% endif %}
+            <div class="side_bar">
+                <div class="options">
+                    <a href="{% url 'inventory' %}">
+                        <button class="btn_options">Inventario</button>
+                    </a>
+                    <button class="btn_options">Compras</button>
+                    <button class="btn_options">Ventas</button>
+                    <button class="btn_options">Clientes</button>
+                    <button class="btn_options">Proveedores</button>
                 </div>
             </div>
-            <div class="render_content">
-                {% block content  %}
-                {% endblock  %}
-            </div>
-        </div>
 
-    </div>
-</body>
+            <div class="main_content">
+                <div class="nav_bar">
+                    <div class="nav_bar_content">
+                        {% if user.is_authenticated %}
+                            <span class="subtitle">Bienvenido {{user.username}}</span>
+                            <a href="{% url 'logout' %}">
+                                <button type="button" class="btn logout">Cerrar sesión</button>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="render_content">
+                    <div class="render_box">
+                        {% block content  %}
+                        {% endblock  %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </body>
 </html>

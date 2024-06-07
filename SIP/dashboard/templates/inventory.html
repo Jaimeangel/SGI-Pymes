@@ -1,0 +1,35 @@
+{% extends "dashboard.html" %}
+
+{% block title  %}
+    Inventario
+{% endblock  %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "inventory.css" %}">
+{% endblock  %}
+
+{% block content  %}
+    <div class="content_table">
+        <div class="header_table">
+            <h2 class="subtitle">Stock de productos</h2>
+            <a href="">
+                <button class="btn">Agregar producto</button>
+            </a>
+        </div>
+
+        <div class="table_header">
+            <p class="td first">Producto</p>
+            <p class="td second">Precio</p>
+            <p class="td third">Stock</p>
+        </div>
+
+        {% for producto in stock  %}
+            <div class="table_header">
+                <p class="td_product first">{{producto.product.name}}</p>
+                <p class="td_product second">{{producto.product.price_sale}}</p>
+                <p class="td_product third">{{producto.current_stock}}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock  %}

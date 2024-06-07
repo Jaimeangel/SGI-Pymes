@@ -9,3 +9,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 class StockViewSet(viewsets.ModelViewSet):
     queryset = Stock.objects.all()
     serializer_class = StockSerializer
+
+class StockDetailViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Stock.objects.all()
+    serializer_class = StockSerializer

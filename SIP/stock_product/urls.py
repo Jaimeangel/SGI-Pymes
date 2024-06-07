@@ -7,5 +7,5 @@ router.register('products', ProductViewSet)
 router.register('stock', StockViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', include(router.urls))
 ]

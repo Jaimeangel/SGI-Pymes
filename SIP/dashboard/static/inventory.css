@@ -1,0 +1,52 @@
+.content_table{
+    background-color: white;
+    width: 100%;
+    height: auto;
+    padding: 20px 20px;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.header_table{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.table_header{
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: "Nunito", sans-serif;
+    display: flex;
+    flex-direction: row;
+}
+
+.td{
+    padding: 5px;
+    background-color: rgb(222, 221, 221);
+    border: 1px solid black;
+    text-align: center;
+    font-weight: 700;
+}
+
+.td_product{
+    padding: 5px;
+    border: 1px solid black;
+    text-align: center;
+    font-weight: 700;
+}
+
+.first{
+    width: 50%;
+    border-right: none;
+}
+.second{
+    width: 25%;
+    border-right: none;
+}
+.third{
+    width: 25%;
+}
+

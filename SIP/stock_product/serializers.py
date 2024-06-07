@@ -12,6 +12,8 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = '__all__'  # _all_ para obtener todos lo datos
 
 class StockSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+    
     class Meta:
         model = Stock
         fields = '__all__'  # _all_ para obtener todos lo datos

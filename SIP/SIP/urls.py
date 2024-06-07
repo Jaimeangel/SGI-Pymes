@@ -27,5 +27,6 @@ urlpatterns = [
     path('api/order-sale/', include('order_sale.urls')),
     path('api/order-purchase/', include('order_supplier.urls')),
     path('',include('authentication.urls')),
+    path('',include('dashboard.urls')),
     path('', RedirectView.as_view(url='/login', permanent=False)),
 ]

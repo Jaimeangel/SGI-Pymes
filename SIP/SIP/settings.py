@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'order_supplier',
     'rest_framework',
     'rest_framework.authtoken',
-    'authentication'
+    'authentication',
+    'dashboard'
 ]
 
 REST_FRAMEWORK = {

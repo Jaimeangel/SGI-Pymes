@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -16,12 +16,19 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 token, created = Token.objects.get_or_create(user=user)
-                return redirect('home')  # Redirigir a la página principal después del login
+                return redirect('dashboard-home')  # Redirigir a la página principal después del login
             else:
                 form.add_error(None, 'Username o Password invalidos')
     else:
         form = UserLoginForm()
     return render(request, 'login.html', {'form': form})
+
+def logout_view(request):
+    if request.user.is_authenticated:
+        # Eliminar el token del usuario
+        Token.objects.filter(user=request.user).delete()
+        logout(request)
+    return redirect('login')
 
 class ObtainAuthTokenView(APIView):
     def post(self, request):
@@ -32,3 +39,4 @@ class ObtainAuthTokenView(APIView):
             token, created = Token.objects.get_or_create(user=user)
             return Response({'token': token.key})
         return Response({'error': 'Invalid credentials'}, status=400)
+

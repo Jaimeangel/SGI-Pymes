@@ -1,0 +1,28 @@
+{% extends "dashboard.html" %}
+
+{% block title  %}
+    Agregar producto
+{% endblock  %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static  "add_producto.css"  %}">
+{% endblock  %}
+
+{% block content  %}
+    <div class="content_table">
+        <div class="content_form">
+            <a href="{% url 'inventory' %}">
+                <button class="btn secondary">Regresar</button>
+            </a>
+            <h2 class="subtitle">Agregar producto</h2>
+            <div class="box_form">
+                <form method="post" class="form_post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn submit">Agregar producto</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock  %}

@@ -52,7 +52,6 @@ table {
 
 .side_bar{
     width: 20%;
-    height: 100vh;
     background-color: #2a2621;
     display: flex;
     flex-direction: column;
@@ -89,7 +88,6 @@ table {
 
 .main_content{
     width:80%;
-    height: 100vh;
     background-color:#fdfbf8;
 }
 
@@ -137,16 +135,24 @@ table {
     background: #DBB16C;
 }
 
+.submit{
+    background-color: #D76C58;
+}
+
+.secondary{
+    background-color: #9ba5aa;
+}
+
 .render_content{
     width: 100%;
-    overflow-y: auto;
-    padding-top: 40px;
-    padding-bottom: 20px;
+    height: 90%;
     display: flex;
     justify-content: center;
+    overflow-y: scroll;
 }
 
 .render_box{
     width: 90%;
-    height: auto;
+    padding-top: 50px;
+    padding-bottom: 60px;
 }

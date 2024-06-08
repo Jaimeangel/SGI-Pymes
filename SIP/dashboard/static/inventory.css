@@ -41,6 +41,9 @@
 .first{
     width: 50%;
     border-right: none;
+    text-align: start;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 .second{
     width: 25%;
@@ -48,5 +51,7 @@
 }
 .third{
     width: 25%;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 

@@ -1,0 +1,12 @@
+.box_detail{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 15px;
+}
+
+.group_btn{
+    display: flex;
+    align-self: flex-end;
+    gap: 30px;
+}

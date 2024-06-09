@@ -1,0 +1,40 @@
+{% extends "dashboard.html" %}
+
+{% block title  %}
+    Agregar producto
+{% endblock  %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static  "detail_product.css"  %}">
+{% endblock  %}
+
+{% block content  %}
+    <div class="content_table">
+        <div class="box_detail">
+            <div class="group_btn">
+                <a href="{% url 'inventory' %}">
+                    <button class="btn">Regresar</button>
+                </a>
+            </div>
+            <h2 class="subtitle">ID producto : {{product.id}}</h2>
+            <div class="box_detail">
+                <p class="subtitle">Nombre del producto:</p>
+                <h2 class="title">{{product.name}}</h2>
+            </div>
+            <div class="box_detail">
+                <p class="subtitle">Descripción:</p>
+                <p class="title">{{product.description}}</p>
+            </div>
+            <p class="subtitle">Precio {{product.price_sale}}</p>
+            <div class="group_btn">
+                <a href="{% url 'edit-product' product.id %}">
+                    <button class="btn">Editar</button>
+                </a>
+                <a href="{% url 'delete-product' product.id %}">
+                    <button class="btn delete">Eliminar</button>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock  %}

@@ -25,11 +25,13 @@
         </div>
 
         {% for producto in stock  %}
-            <div class="table_header">
-                <p class="td_product first">{{producto.product.name}}</p>
-                <p class="td_product second">{{producto.product.price_sale}}</p>
-                <p class="td_product third">{{producto.current_stock}}</p>
-            </div>
+            <a href="{% url 'detail-product' producto.product.id %}">
+                <div class="table_header">
+                    <p class="td_product first">{{ producto.product.name | slice:":60" }}</p>
+                    <p class="td_product second">{{producto.product.price_sale}}</p>
+                    <p class="td_product third">{{producto.current_stock}}</p>
+                </div>
+            </a>
         {% endfor %}
     </div>
 {% endblock  %}

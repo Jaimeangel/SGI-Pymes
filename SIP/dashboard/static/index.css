@@ -42,6 +42,10 @@ table {
 	border-spacing: 0;
 }
 
+a{
+    text-decoration: none;
+}
+
 
 .container{
     width: 100vw;
@@ -118,6 +122,14 @@ table {
 	text-align: center;
 }
 
+.title{
+	font-size: 30px;
+	font-weight: bold;
+	font-style: italic;
+	font-family: "Nunito", sans-serif;
+	text-align: center;
+}
+
 .btn{
 	font-family: "Nunito", sans-serif;
 	box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
@@ -143,6 +155,11 @@ table {
     background-color: #9ba5aa;
 }
 
+.delete{
+    background-color: rgb(212, 4, 4);
+    color: white;
+}
+
 .render_content{
     width: 100%;
     height: 90%;
@@ -155,4 +172,13 @@ table {
     width: 90%;
     padding-top: 50px;
     padding-bottom: 60px;
+}
+
+.content_table{
+    background-color: white;
+    width: 100%;
+    height: auto;
+    padding: 20px 20px;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }

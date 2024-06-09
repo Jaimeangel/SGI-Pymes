@@ -1,0 +1,37 @@
+{% extends "dashboard.html" %}
+
+{% block title  %}
+    Clientes
+{% endblock  %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "inventory.css" %}">
+{% endblock  %}
+
+{% block content  %}
+    <div class="content_table">
+        <div class="header_table">
+            <h2 class="subtitle">Clientes</h2>
+            <a href="{% url 'add-client' %}">
+                <button class="btn secondary">Agregar cliente</button>
+            </a>
+        </div>
+
+        <div class="table_header">
+            <p class="td first">Nombres</p>
+            <p class="td second">Identidad</p>
+            <p class="td third">Celular</p>
+        </div>
+
+        {% for cliente in clientes  %}
+            <a href="{% url 'detail-client' cliente.id %}">
+                <div class="table_header">
+                    <p class="td_product first">{{cliente.first_name}} {{cliente.last_name}}</p>
+                    <p class="td_product second">{{cliente.identity}}</p>
+                    <p class="td_product third">{{cliente.phone_contact}}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock  %}

@@ -1,0 +1,47 @@
+{% extends "dashboard.html" %}
+
+{% block title  %}
+    detalle cliente
+{% endblock  %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static  "detail_product.css"  %}">
+{% endblock  %}
+
+{% block content  %}
+    <div class="content_table">
+        <div class="box_detail">
+            <div class="group_btn">
+                <a href="{% url 'clients' %}">
+                    <button class="btn">Regresar</button>
+                </a>
+            </div>
+            <h2 class="subtitle">ID cliente : {{client.id}}</h2>
+            <div class="box_detail">
+                <p class="subtitle">Nombre del cliente:</p>
+                <h2 class="title">{{client.first_name}} {{client.last_name}}</h2>
+            </div>
+            <div class="box_detail">
+                <p class="subtitle">Identidad:</p>
+                <h2 class="title">{{client.identity}}</h2>
+            </div>
+            <div class="box_detail">
+                <p class="subtitle">Celular contacto:</p>
+                <h2 class="title">{{client.phone_contact}}</h2>
+            </div>
+            <div class="box_detail">
+                <p class="subtitle">Dirección:</p>
+                <h2 class="title">{{client.address}}</h2>
+            </div>
+            <div class="group_btn">
+                <a href="{% url 'edit-cliente' client.id %}">
+                    <button class="btn">Editar</button>
+                </a>
+                <a href="{% url 'delete-cliente' client.id %}">
+                    <button class="btn delete">Eliminar</button>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock  %}

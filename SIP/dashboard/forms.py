@@ -1,4 +1,5 @@
 from stock_product.models import Product
+from cliente.models import Client
 from django import forms
 
 class ProductForm(forms.ModelForm):
@@ -20,5 +21,32 @@ class ProductForm(forms.ModelForm):
             'price_sale': forms.NumberInput(attrs={
                 'class': 'form-control-product',
                 'placeholder': 'Precio de venta'
+            }),
+        }
+
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = ['first_name', 'last_name', 'identity', 'phone_contact','address']
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control-product',
+                'placeholder': 'Nombre del producto'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control-product',
+                'placeholder': 'Descripción del producto'
+            }),
+            'identity': forms.NumberInput(attrs={
+                'class': 'form-control-product',
+                'placeholder': 'Numero de indentidad cliente'
+            }),
+            'phone_contact': forms.NumberInput(attrs={
+                'class': 'form-control-product',
+                'placeholder': 'Celular de contacto'
+            }),
+            'address': forms.TextInput(attrs={
+                'class': 'form-control-product',
+                'placeholder': 'Dirección del cliente'
             }),
         }

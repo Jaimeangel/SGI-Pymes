@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken.models import Token
-from .forms import ProductForm,ClienteForm
+from .forms import ProductForm,ClienteForm,ProveedorForm
 import requests
 
 @login_required(login_url='/login')
@@ -357,4 +357,172 @@ def edit_cliente(request, pk):
             return HttpResponse("An unexpected error occurred.", status=500)
 
     return render(request, 'edit_client.html', {'form': form,'cliente': client_data})
+
+
+#Vistas Proveedores
+
+@login_required(login_url='/login')
+def proveedores_view(request):
+    url = "http://localhost:8000/api/suppliers/"
+
+    # A GET request to the API
+    data = requests.get(url)
+
+    # Print the response
+    data_json = data.json()
+    return render(request, 'proveedores_list.html',{'proveedores':data_json})
+
+@login_required(login_url='/login')
+def add_proveedor(request):
+    if request.method == 'POST':
+        form = ProveedorForm(request.POST)
+        if form.is_valid():
+            # Extract data from form and convert to appropriate types
+            name = form.cleaned_data['name']
+            contact_number = int(form.cleaned_data['contact_number'])  # Convert Decimal to float
+            identity = int(form.cleaned_data['identity'])  # Ensure category is an integer
+
+            # Ensure the user is authenticated
+            if request.user.is_authenticated:
+                # Get the token of the authenticated user
+                token, created = Token.objects.get_or_create(user=request.user)
+
+                # Prepare the payload for the API request
+                payload = {
+                    'name': name,
+                    'contact_number': contact_number,
+                    'identity': identity,
+                }
+
+                # Define the API endpoint
+                api_endpoint = "http://localhost:8000/api/suppliers/"
+
+                # Set up the headers, including the token for authorization
+                headers = {
+                    'Authorization': f'Token {token.key}',
+                    'Content-Type': 'application/json'
+                }
+
+                # Make the API request
+                response = requests.post(api_endpoint, json=payload, headers=headers)
+
+                # Check if the request was successful
+                if response.status_code == 201:
+                    return redirect('suppliers')
+                else:
+                    print('API request failed:', response.text)
+            else:
+                print('User is not authenticated')
+                return redirect('login')  # Redirect to login if user is not authenticated
+        else:
+            print('Form is not valid')
+    else:
+        form = ProveedorForm()
+
+    return render(request, 'add_proveedor.html', {'form': form})
+
+@login_required(login_url='/login')
+def detail_proveedor(request,pk):
+    url = f"http://localhost:8000/api/suppliers/{pk}/"
+    
+
+    try:
+        proveedor_detail = requests.get(url)
+        proveedor_detail.raise_for_status() 
+
+        # Print the response
+        proveedor_detail_json = proveedor_detail.json()
+        return render(request, 'detail_proveedor.html', {'proveedor': proveedor_detail_json})
+    
+    except requests.exceptions.RequestException as req_err:
+        print(f"An error occurred: {req_err}")
+        return HttpResponse("An error occurred.", status=500)
+    
+    except ValueError as val_err:
+        print(f"JSON decoding failed: {val_err}")
+        return HttpResponse("Error decoding JSON response.", status=500)
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return HttpResponse("An unexpected error occurred.", status=500)
+
+@login_required(login_url='/login')
+def delete_proveedor(request,pk):
+    url = f"http://localhost:8000/api/suppliers/{pk}/"
+
+    try:
+        proveedor_detail = requests.delete(url)
+        proveedor_detail.raise_for_status() 
+
+        return redirect('suppliers')
+    
+    except requests.exceptions.RequestException as req_err:
+        print(f"An error occurred: {req_err}")
+        return HttpResponse("An error occurred.", status=500)
+    
+    except ValueError as val_err:
+        print(f"JSON decoding failed: {val_err}")
+        return HttpResponse("Error decoding JSON response.", status=500)
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return HttpResponse("An unexpected error occurred.", status=500)
+
+@login_required(login_url='/login')
+def edit_proveedor(request, pk):
+    url = f"http://localhost:8000/api/suppliers/{pk}/"
+
+    # Obtener el token del usuario autenticado
+    token, created = Token.objects.get_or_create(user=request.user)
+    headers = {
+        'Authorization': f'Token {token.key}',
+        'Content-Type': 'application/json'
+    }
+
+    if request.method == 'POST':
+        form = ProveedorForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            contact_number = int(form.cleaned_data['contact_number'])  # Convert Decimal to float
+            identity = int(form.cleaned_data['identity'])  # Ensure category is an integer
+
+            payload = {
+                'name': name,
+                'contact_number': contact_number,
+                'identity': identity,
+            }
+
+            # Realizar una solicitud PUT a la API para actualizar el producto
+            response = requests.put(url, json=payload, headers=headers)
+            if response.status_code == 200:
+                return redirect('suppliers')
+            else:
+                print('API request failed:', response.text)
+        else:
+            print('Form is not valid')
+    else:
+        # Realizar una solicitud GET a la API para obtener los datos actuales del producto
+        try:
+            response = requests.get(url, headers=headers)
+            response.raise_for_status()
+            client_data = response.json()
+
+            # Inicializar el formulario con los datos actuales del producto
+            form = ProveedorForm(initial={
+                'name': client_data['name'],
+                'contact_number': client_data['contact_number'],  # Ajusta según el campo de tu formulario
+                'identity': client_data['identity'],
+            })
+
+        except requests.exceptions.RequestException as req_err:
+            print(f"An error occurred: {req_err}")
+            return HttpResponse("An error occurred.", status=500)
+        except ValueError as val_err:
+            print(f"JSON decoding failed: {val_err}")
+            return HttpResponse("Error decoding JSON response.", status=500)
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+            return HttpResponse("An unexpected error occurred.", status=500)
+
+    return render(request, 'edit_proveedor.html', {'form': form,'proveedor': client_data})
 

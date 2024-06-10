@@ -1,0 +1,37 @@
+{% extends "dashboard.html" %}
+
+{% block title  %}
+    Proveedores
+{% endblock  %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "inventory.css" %}">
+{% endblock  %}
+
+{% block content  %}
+    <div class="content_table">
+        <div class="header_table">
+            <h2 class="subtitle">Proveedores</h2>
+            <a href="{% url 'add-supplier' %}">
+                <button class="btn secondary">Agregar proveedor</button>
+            </a>
+        </div>
+
+        <div class="table_header">
+            <p class="td first">Nombre</p>
+            <p class="td second">Identidad</p>
+            <p class="td third">Celular</p>
+        </div>
+
+        {% for proveedor in proveedores  %}
+            <a href="{% url 'detail-supplier' proveedor.id %}">
+                <div class="table_header">
+                    <p class="td_product first">{{proveedor.name}}</p>
+                    <p class="td_product second">{{proveedor.identity}}</p>
+                    <p class="td_product third">{{proveedor.contact_number}}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock  %}

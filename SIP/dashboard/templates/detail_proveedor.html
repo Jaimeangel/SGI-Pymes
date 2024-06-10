@@ -1,0 +1,43 @@
+{% extends "dashboard.html" %}
+
+{% block title  %}
+    detalle producto
+{% endblock  %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static  "detail_product.css"  %}">
+{% endblock  %}
+
+{% block content  %}
+    <div class="content_table">
+        <div class="box_detail">
+            <div class="group_btn">
+                <a href="{% url 'suppliers' %}">
+                    <button class="btn">Regresar</button>
+                </a>
+            </div>
+            <h2 class="subtitle">ID producto : {{proveedor.id}}</h2>
+            <div class="box_detail">
+                <p class="subtitle">Nombre del proveedor:</p>
+                <h2 class="title">{{proveedor.name}}</h2>
+            </div>
+            <div class="box_detail">
+                <p class="subtitle">Identificacion:</p>
+                <p class="title">{{proveedor.identity}}</p>
+            </div>
+            <div class="box_detail">
+                <p class="subtitle">Contacto:</p>
+                <p class="title">{{proveedor.contact_number}}</p>
+            </div>
+            <div class="group_btn">
+                <a href="{% url 'edit-supplier' proveedor.id %}">
+                    <button class="btn">Editar</button>
+                </a>
+                <a href="{% url 'delete-supplier' proveedor.id %}">
+                    <button class="btn delete">Eliminar</button>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock  %}

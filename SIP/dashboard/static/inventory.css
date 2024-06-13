@@ -30,6 +30,29 @@
     color: black;
 }
 
+.id{
+    width: 4%;
+    border-right: none;
+    text-align: start;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;  
+    text-align: center;
+}
+
+.supplier{
+    width: 48%;
+    border-right: none;
+}
+
+.fields{
+    width: 16%;
+    border-right: none;  
+}
+
+.last_field{
+    width: 16%;
+}
+
 .first{
     width: 50%;
     border-right: none;
@@ -47,3 +70,7 @@
     border-bottom-right-radius: 5px;
 }
 
+.final{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;   
+}

@@ -1,6 +1,7 @@
 from stock_product.models import Product
 from cliente.models import Client
 from supplier.models import Supplier
+from order_supplier.models import OrderSupplier,OrderSupplierDetail
 from django import forms
 
 class ProductForm(forms.ModelForm):
@@ -67,4 +68,31 @@ class ProveedorForm(forms.ModelForm):
             'contact_number': forms.NumberInput(attrs={
                 'class': 'form-control-product'
             }),
+        }
+
+class OrderPurchaseForm(forms.ModelForm):
+    class Meta:
+        model = OrderSupplier
+        fields = ['supplier']
+        widgets = {
+            'supplier': forms.Select(attrs={
+                'class': 'form-control-product',
+                'placeholder': 'Nombre del proveedor'
+            })
+        }
+
+class OrderPurchaseDetailForm(forms.ModelForm):
+    class Meta:
+        model = OrderSupplierDetail
+        fields = ['product','quantity','purchase_price']
+        widgets = {
+            'product': forms.Select(attrs={
+                'class': 'form-control-product'
+            }),
+            'quantity': forms.NumberInput(attrs={
+                'class': 'form-control-product'
+            }),
+            'purchase_price': forms.NumberInput(attrs={
+                'class': 'form-control-product'
+            })
         }

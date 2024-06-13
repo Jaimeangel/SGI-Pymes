@@ -10,3 +10,71 @@
     align-self: flex-end;
     gap: 30px;
 }
+
+.box_product_detail{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.table_header_custom{
+    width: 85%;
+    cursor: pointer;
+    font-family: "Nunito", sans-serif;
+    display: flex;
+    flex-direction: row;
+}
+
+.btn_edit_delete{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.td_product{
+    padding: 10px 5px;
+    border: 1px solid black;
+    text-align: center;
+    font-weight: 700;
+    color: black;
+}
+
+.td{
+    padding: 5px;
+    background-color: rgb(222, 221, 221);
+    border: 1px solid black;
+    text-align: center;
+    font-weight: 700;
+}
+
+.product{
+    width: 58%;
+    border-right: none;
+    text-align: start;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;  
+    text-align: center;
+}
+
+.precio{
+    width: 16%;
+    border-right: none;
+}
+
+.cantidad{
+    width: 10%;
+    border-right: none;
+}
+
+.total{
+    width: 16%;
+}
+
+
+.final{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;   
+}
+
+

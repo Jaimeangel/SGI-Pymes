@@ -23,24 +23,35 @@
             </div>
         </div>
 
-        <div class="table_header">
-            <p class="td id">Id</p>
-            <p class="td supplier">Proveedor</p>
-            <p class="td fields">Estado</p>
-            <p class="td fields">Fecha</p>
-            <p class="td last_field final">Total</p>
-        </div>
+        {% if orders|length > 0 %}
+            <div class="table_header">
+                <p class="td id">Id</p>
+                <p class="td supplier">Proveedor</p>
+                <p class="td fields">Estado</p>
+                <p class="td fields">Fecha</p>
+                <p class="td last_field final">Total</p>
+            </div>
 
-        {% for order in orders  %}
-            <a href="{% url 'detail-order-purchase' order.id %}">
-                <div class="table_header">
-                    <p class="td_product id">{{order.id}}</p>
-                    <p class="td_product supplier">{{order.supplier.name}}</p>
-                    <p class="td_product fields">{{order.state}}</p>
-                    <p class="td_product fields">{{order.created_at | slice:":10" }}</p>
-                    <p class="td_product last_field final">{{order.total_value}}</p>
-                </div>
-            </a>
-        {% endfor %}
+            {% for order in orders  %}
+                <a href="{% url 'detail-order-purchase' order.id %}">
+                    <div class="table_header">
+                        <p class="td_product id">{{order.id}}</p>
+                        <p class="td_product supplier">{{order.supplier.name}}</p>
+                        <p class="td_product fields">{{order.state}}</p>
+                        <p class="td_product fields">{{order.created_at | slice:":10" }}</p>
+                        <p class="td_product last_field final">{{order.total_value}}</p>
+                    </div>
+                </a>
+            {% endfor %}
+        
+        {% else %}
+            <div class="msg-empty">
+                <span>
+                    <i class='bx bxs-grid bx-lg'></i>
+                </span>
+                <h2 class="title">No hay productos asociados con esta orden</h2>
+            </div>       
+        {% endif %}
+
     </div>
 {% endblock  %}

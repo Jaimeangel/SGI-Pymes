@@ -161,6 +161,31 @@ a{
     color: white;
 }
 
+.add{
+    background-color: #5783db;;
+}
+
+.delete_secondary{
+    background-color: rgb(255, 217, 223);
+    border: 1px solid rgb(254, 58, 58);
+}
+
+.edit_secondary{
+    background-color: #b9d0ff;
+    border: 1px solid #5783db;
+}
+
+.return{
+    background-color: #ffe97d;
+    border: 2px solid #ffd501 ;
+    color: black;
+}
+
+.complete{
+    background-color: #33b249;
+    color: black;
+}
+
 .render_content{
     width: 100%;
     height: 90%;
@@ -198,4 +223,29 @@ a{
     align-items: center;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.msg-empty{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.msg-empty span{
+    width: 60px;
+}
+
+.group_sides{
+    width: 100%;
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mb{
+    margin-top: 10px;
+    color: green;
 }

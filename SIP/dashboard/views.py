@@ -789,3 +789,24 @@ def delete_order_detail_purchase(request,pk,pk_order):
         print(f"An unexpected error occurred: {e}")
         return HttpResponse("An unexpected error occurred.", status=500)
 
+@login_required(login_url='/login')
+def complete_order_purchase(request,pk):
+    url=f"http://127.0.0.1:8000/api/order-purchase/purchase/{pk}/complete_order_purchase/"
+
+    try:
+        purchase_detail = requests.post(url)
+        purchase_detail.raise_for_status() 
+
+        return redirect('detail-order-purchase',pk=pk)
+    
+    except requests.exceptions.RequestException as req_err:
+        print(f"An error occurred: {req_err}")
+        return HttpResponse("An error occurred.", status=500)
+    
+    except ValueError as val_err:
+        print(f"JSON decoding failed: {val_err}")
+        return HttpResponse("Error decoding JSON response.", status=500)
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return HttpResponse("An unexpected error occurred.", status=500)

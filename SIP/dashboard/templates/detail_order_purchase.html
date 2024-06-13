@@ -16,55 +16,84 @@
 {% block content  %}
     <div class="content_table">
         <div class="box_detail">
-            <div class="group_btn">
+            <div class="separate_both_sides">
+                {% if purchase.state == "COMPLETED" %}
+                    <p class="title">Estado : <i class='bx bx-check-circle mb'></i> {{purchase.state}}</p>
+                {% else %}
+                    <p class="title">Estado : {{purchase.state}}</p>
+                {% endif %}
                 <a href="{% url 'purchases' %}">
-                    <button class="btn">Regresar</button>
+                    <button class="btn return">Regresar</button>
                 </a>
             </div>
             <p class="title">Orden de compra #{{purchase.id}}</p>
             <p class="subtitle">Nombre del proveedor: {{purchase.supplier.name}}</p>
             <p class="subtitle">Identidad: {{purchase.supplier.identity}}</p>
             <p class="subtitle">Celular contacto: {{purchase.supplier.contact_number}}</p>
-            <p class="subtitle">Valor total: {{purchase.total_value}}</p>
+            <div class="group_sides">
+                <p class="subtitle">VALOR TOTAL: {{purchase.total_value}}</p>
+                {% if purchase.state == "INPROGRESS" %}
+                    <a href="{% url 'complete-order-detail-purchase' pk=purchase.id %}">
+                        <button class="btn complete">Completar orden</button>
+                    </a>
+                {% endif %}
+            </div>
 
             <div class="separate_both_sides">
                 <p class="title">Productos</p>
-                <a href="{% url 'add-order-detail-purchase' pk=purchase.id %}">
-                    <button class="btn">Agregar producto</button>
-                </a>
+                {% if purchase.state == "INPROGRESS" %}
+                    <a href="{% url 'add-order-detail-purchase' pk=purchase.id %}">
+                        <button class="btn add">Agregar producto</button>
+                    </a>
+                {% endif %}
             </div>
 
-            <div class="table_header_custom">
-                <p class="td product">Producto</p>
-                <p class="td precio">Precio</p>
-                <p class="td cantidad">Cantidad</p>
-                <p class="td total final">Total</p>
-            </div>
-
-            {% for detail in purchase_detail  %}
-                <div class="box_product_detail">
-                    <div class="table_header_custom">
-                        <p class="td_product product">{{detail.product.name}}</p>
-                        <p class="td_product precio">{{detail.purchase_price}}</p>
-                        <p class="td_product cantidad">{{detail.quantity}}</p>
-                        <p class="td_product total final">{{detail.total_purchase}}</p>
-                    </div>
-                    <div class="btn_edit_delete">
-                        <a href="{% url 'edit-order-detail-purchase' pk=detail.id pk_order=purchase.id %}">
-                            <button class="btn"><i class='bx bxs-message-alt-edit'></i></button>
-                        </a>
-                        <a href="{% url 'delete-order-detail-purchase' pk=detail.id  pk_order=purchase.id%}">
-                            <button class="btn"><i class='bx bxs-trash-alt'></i></button>
-                        </a>
-                    </div>
+            {% if purchase_detail|length > 0 %}
+                <div class="table_header_custom">
+                    <p class="td product">Producto</p>
+                    <p class="td precio">Precio</p>
+                    <p class="td cantidad">Cantidad</p>
+                    <p class="td total final">Total</p>
                 </div>
-            {% endfor %}
 
-            <div class="group_btn">
-                <a href="{% url 'delete-order-purchase' purchase.id %}">
-                    <button class="btn delete">Eliminar</button>
-                </a>
-            </div>
+                {% for detail in purchase_detail  %}
+                    <div class="box_product_detail">
+                        <div class="table_header_custom">
+                            <p class="td_product product">{{detail.product.name}}</p>
+                            <p class="td_product precio">{{detail.purchase_price}}</p>
+                            <p class="td_product cantidad">{{detail.quantity}}</p>
+                            <p class="td_product total final">{{detail.total_purchase}}</p>
+                        </div>
+                        {% if purchase.state == "INPROGRESS" %}
+                            <div class="btn_edit_delete">
+                                <a href="{% url 'edit-order-detail-purchase' pk=detail.id pk_order=purchase.id %}">
+                                    <button class="btn edit_secondary"><i class='bx bxs-message-alt-edit'></i></button>
+                                </a>
+                                <a href="{% url 'delete-order-detail-purchase' pk=detail.id  pk_order=purchase.id%}">
+                                    <button class="btn delete_secondary"><i class='bx bxs-trash-alt'></i></button>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            
+            {% else %}
+                <div class="msg-empty">
+                    <span>
+                        <i class='bx bxs-grid bx-lg'></i>
+                    </span>
+                    <h2 class="title">No hay productos asociados con esta orden</h2>
+                </div>
+            {% endif %}
+
+            
+            {% if purchase.state == "INPROGRESS" %}
+                <div class="group_btn">
+                    <a href="{% url 'delete-order-purchase' purchase.id %}">
+                        <button class="btn delete">Eliminar orden</button>
+                    </a>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock  %}

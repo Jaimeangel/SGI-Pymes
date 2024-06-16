@@ -16,7 +16,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 token, created = Token.objects.get_or_create(user=user)
-                return redirect('dashboard-home')  # Redirigir a la página principal después del login
+                return redirect('inventory')  # Redirigir a la página principal después del login
             else:
                 form.add_error(None, 'Username o Password invalidos')
     else:

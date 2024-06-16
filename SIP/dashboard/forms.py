@@ -2,6 +2,7 @@ from stock_product.models import Product
 from cliente.models import Client
 from supplier.models import Supplier
 from order_supplier.models import OrderSupplier,OrderSupplierDetail
+from order_sale.models import OrderSale,OrderSaleDetail
 from django import forms
 
 class ProductForm(forms.ModelForm):
@@ -93,6 +94,33 @@ class OrderPurchaseDetailForm(forms.ModelForm):
                 'class': 'form-control-product'
             }),
             'purchase_price': forms.NumberInput(attrs={
+                'class': 'form-control-product'
+            })
+        }
+
+
+class OrderSaleForm(forms.ModelForm):
+    class Meta:
+        model = OrderSale
+        fields = ['client']
+        widgets = {
+            'client': forms.Select(attrs={
+                'class': 'form-control-product'
+            })
+        }
+
+class OrderSaleDetailForm(forms.ModelForm):
+    class Meta:
+        model = OrderSaleDetail
+        fields = ['product','quantity','sale_price']
+        widgets = {
+            'product': forms.Select(attrs={
+                'class': 'form-control-product'
+            }),
+            'quantity': forms.NumberInput(attrs={
+                'class': 'form-control-product'
+            }),
+            'sale_price': forms.NumberInput(attrs={
                 'class': 'form-control-product'
             })
         }

@@ -1,7 +1,7 @@
 {% extends "dashboard.html" %}
 
 {% block title  %}
-    Ordenes de compra
+    Ordenes de venta
 {% endblock  %}
 
 {% block head %}
@@ -12,13 +12,13 @@
 {% block content  %}
     <div class="content_table">
         <div class="header_table">
-            <h2 class="subtitle">Ordenes de compra</h2>
+            <h2 class="subtitle">Ordenes de venta</h2>
             <div class="group_btn">
-                <a href="{% url 'add-order-purchase' %}">
-                    <button class="btn secondary">Crear orden de compra</button>
+                <a href="{% url 'add-order-sale' %}">
+                    <button class="btn secondary">Crear orden de venta</button>
                 </a>
-                <a href="{% url 'add-supplier' %}">
-                    <button class="btn secondary">Crear proveedor</button>
+                <a href="{% url 'add-client' %}">
+                    <button class="btn secondary">Crear cliente</button>
                 </a>
             </div>
         </div>
@@ -26,17 +26,17 @@
         {% if orders|length > 0 %}
             <div class="table_header">
                 <p class="td id">Id</p>
-                <p class="td supplier">Proveedor</p>
+                <p class="td supplier">Cliente</p>
                 <p class="td fields">Estado</p>
                 <p class="td fields">Fecha</p>
                 <p class="td last_field final">Total</p>
             </div>
 
             {% for order in orders  %}
-                <a href="{% url 'detail-order-purchase' order.id %}">
+                <a href="{% url 'detail-order-sale' order.id %}">
                     <div class="table_header">
                         <p class="td_product id">{{order.id}}</p>
-                        <p class="td_product supplier">{{order.supplier.name}}</p>
+                        <p class="td_product supplier">{{order.client.first_name}} {{order.client.last_name}}</p>
                         <p class="td_product fields">{{order.state}}</p>
                         <p class="td_product fields">{{order.created_at | slice:":10" }}</p>
                         <p class="td_product last_field final">{{order.total_value}}</p>
@@ -49,7 +49,7 @@
                 <span>
                     <i class='bx bxs-grid bx-lg'></i>
                 </span>
-                <h2 class="title">No hay productos asociados con esta orden</h2>
+                <h2 class="title">No hay ordenes de venta creadas</h2>
             </div>       
         {% endif %}
 

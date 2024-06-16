@@ -1,0 +1,99 @@
+{% extends "dashboard.html" %}
+
+{% block title  %}
+    detalle orden de venta
+{% endblock  %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static  "detail_product.css"  %}">
+    <link
+        href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+        rel="stylesheet"
+    />
+{% endblock  %}
+
+{% block content  %}
+    <div class="content_table">
+        <div class="box_detail">
+            <div class="separate_both_sides">
+                {% if sale.state == "COMPLETED" %}
+                    <p class="title">Estado : <i class='bx bx-check-circle mb'></i> {{sale.state}}</p>
+                {% else %}
+                    <p class="title">Estado : {{sale.state}}</p>
+                {% endif %}
+                <a href="{% url 'sales' %}">
+                    <button class="btn return">Regresar</button>
+                </a>
+            </div>
+            <p class="title">Orden de venta #{{sale.id}}</p>
+            <p class="subtitle">Nombre del cliente: {{sale.client.first_name}} {{sale.client.last_name}}</p>
+            <p class="subtitle">Identidad: {{sale.client.identity}}</p>
+            <p class="subtitle">Celular contacto: {{sale.client.phone_contact}}</p>
+            <div class="group_sides">
+                <p class="subtitle">VALOR TOTAL: {{sale.total_value}}</p>
+                {% if sale.state == "INPROGRESS" %}
+                    <a href="{% url 'complete-order-detail-sale' pk=sale.id %}">
+                        <button class="btn complete">Completar orden</button>
+                    </a>
+                {% endif %}
+            </div>
+
+            <div class="separate_both_sides">
+                <p class="title">Productos</p>
+                {% if sale.state == "INPROGRESS" %}
+                    <a href="{% url 'add-order-detail-sale' pk=sale.id %}">
+                        <button class="btn add">Agregar producto</button>
+                    </a>
+                {% endif %}
+            </div>
+
+            {% if sale_detail|length > 0 %}
+                <div class="table_header_custom">
+                    <p class="td product">Producto</p>
+                    <p class="td precio">Precio</p>
+                    <p class="td cantidad">Cantidad</p>
+                    <p class="td total final">Total</p>
+                </div>
+
+                {% for detail in sale_detail  %}
+                    <div class="box_product_detail">
+                        <div class="table_header_custom">
+                            <p class="td_product product">{{detail.product.name}}</p>
+                            <p class="td_product precio">{{detail.sale_price}}</p>
+                            <p class="td_product cantidad">{{detail.quantity}}</p>
+                            <p class="td_product total final">{{detail.total_detail}}</p>
+                        </div>
+                        {% if sale.state == "INPROGRESS" %}
+                            <div class="btn_edit_delete">
+                                <a href="{% url 'edit-order-detail-sale' pk=detail.id pk_order=sale.id %}">
+                                    <button class="btn edit_secondary"><i class='bx bxs-message-alt-edit'></i></button>
+                                </a>
+                                <a href="{% url 'delete-order-detail-sale' pk=detail.id  pk_order=sale.id%}">
+                                    <button class="btn delete_secondary"><i class='bx bxs-trash-alt'></i></button>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            
+            {% else %}
+                <div class="msg-empty">
+                    <span>
+                        <i class='bx bxs-grid bx-lg'></i>
+                    </span>
+                    <h2 class="title">No hay productos asociados con esta orden</h2>
+                </div>
+            {% endif %}
+
+            
+            {% if sale.state == "INPROGRESS" %}
+                <div class="group_btn">
+                    <a href="{% url 'delete-order-sale' sale.id %}">
+                        <button class="btn delete">Eliminar orden</button>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock  %}

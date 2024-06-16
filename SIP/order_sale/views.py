@@ -29,6 +29,17 @@ class OrderSaleViewSet(viewsets.ModelViewSet):
             product.stock.save()
 
         return Response({"status": "OrderSale completed and stock updated successfully"}, status=status.HTTP_200_OK)
+    
+    @action(detail=True, methods=['get'])
+    def order_details(self, request, pk=None):
+        try:
+            order_sale = self.get_object()
+        except OrderSale.DoesNotExist:
+            return Response({"error": "OrderSale not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        order_details = OrderSaleDetail.objects.filter(order_sale=order_sale)
+        serializer = OrderSaleDetailSerializer(order_details, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class OrderSaleDetailViewSet(viewsets.ModelViewSet):
     queryset = OrderSaleDetail.objects.all()

@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken.models import Token
-from .forms import ProductForm,ClienteForm,ProveedorForm,OrderPurchaseForm,OrderPurchaseDetailForm
+from .forms import ProductForm,ClienteForm,ProveedorForm,OrderPurchaseForm,OrderPurchaseDetailForm,OrderSaleForm,OrderSaleDetailForm
 import requests
 from django.urls import reverse
 
@@ -798,6 +798,291 @@ def complete_order_purchase(request,pk):
         purchase_detail.raise_for_status() 
 
         return redirect('detail-order-purchase',pk=pk)
+    
+    except requests.exceptions.RequestException as req_err:
+        print(f"An error occurred: {req_err}")
+        return HttpResponse("An error occurred.", status=500)
+    
+    except ValueError as val_err:
+        print(f"JSON decoding failed: {val_err}")
+        return HttpResponse("Error decoding JSON response.", status=500)
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return HttpResponse("An unexpected error occurred.", status=500)
+
+
+#ordenes de venta
+@login_required(login_url='/login')
+def orders_sale_view(request):
+    url = "http://localhost:8000/api/order-sale/sale/"
+
+    # A GET request to the API
+    data = requests.get(url)
+
+    # Print the response
+    data_json = data.json()
+    return render(request, 'sales_list.html',{'orders':data_json})
+
+@login_required(login_url='/login')
+def add_order_sale(request):
+    if request.method == 'POST':
+        form = OrderSaleForm(request.POST)
+        if form.is_valid():
+            # Extract data from form and convert to appropriate types
+            client = int(form.cleaned_data['client'].id)
+
+            # Ensure the user is authenticated
+            if request.user.is_authenticated:
+                # Get the token of the authenticated user
+                token, created = Token.objects.get_or_create(user=request.user)
+
+                # Prepare the payload for the API request
+                payload = {
+                    'client': client,
+                }
+
+                # Define the API endpoint
+                api_endpoint = "http://localhost:8000/api/order-sale/sale/"
+
+                # Set up the headers, including the token for authorization
+                headers = {
+                    'Authorization': f'Token {token.key}',
+                    'Content-Type': 'application/json'
+                }
+
+                # Make the API request
+                response = requests.post(api_endpoint, json=payload, headers=headers)
+
+                # Check if the request was successful
+                if response.status_code == 201:
+                    return redirect('sales')
+                else:
+                    print('API request failed:', response.text)
+            else:
+                print('User is not authenticated')
+                return redirect('login')  # Redirect to login if user is not authenticated
+        else:
+            print('Form is not valid')
+    else:
+        form = OrderSaleForm()
+
+    return render(request, 'add_order_sale.html', {'form': form})
+
+@login_required(login_url='/login')
+def detail_order_sale(request,pk):
+    url = f"http://localhost:8000/api/order-sale/sale/{pk}/"
+    url_detail = f"http://localhost:8000/api/order-sale/sale/{pk}/order_details/"
+    
+
+    try:
+        sale_detail = requests.get(url)
+        sale_detail.raise_for_status() 
+
+        # Print the response
+        sale_detail_json = sale_detail.json()
+        try:
+            order_sale_detail = requests.get(url_detail)
+            order_sale_detail.raise_for_status() 
+
+            # Print the response
+            order_sale_detail_json = order_sale_detail.json()
+
+            return render(request, 'detail_order_sale.html', {'sale': sale_detail_json,'sale_detail':order_sale_detail_json})
+
+        except requests.exceptions.RequestException as req_err:
+            print(f"An error occurred: {req_err}")
+            return HttpResponse("An error occurred.", status=500)
+    
+        except ValueError as val_err:
+            print(f"JSON decoding failed: {val_err}")
+            return HttpResponse("Error decoding JSON response.", status=500)
+
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+            return HttpResponse("An unexpected error occurred.", status=500)
+    
+    except requests.exceptions.RequestException as req_err:
+        print(f"An error occurred: {req_err}")
+        return HttpResponse("An error occurred.", status=500)
+    
+    except ValueError as val_err:
+        print(f"JSON decoding failed: {val_err}")
+        return HttpResponse("Error decoding JSON response.", status=500)
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return HttpResponse("An unexpected error occurred.", status=500)
+
+@login_required(login_url='/login')
+def delete_order_sale(request,pk):
+    url = f"http://localhost:8000/api/order-sale/sale/{pk}/"
+
+    try:
+        sale_detail = requests.delete(url)
+        sale_detail.raise_for_status() 
+
+        return redirect('sales')
+    
+    except requests.exceptions.RequestException as req_err:
+        print(f"An error occurred: {req_err}")
+        return HttpResponse("An error occurred.", status=500)
+    
+    except ValueError as val_err:
+        print(f"JSON decoding failed: {val_err}")
+        return HttpResponse("Error decoding JSON response.", status=500)
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return HttpResponse("An unexpected error occurred.", status=500)
+
+@login_required(login_url='/login')
+def add_order_detail_sale(request,pk):
+    if request.method == 'POST':
+        form = OrderSaleDetailForm(request.POST)
+        if form.is_valid():
+            # Extract data from form and convert to appropriate types
+            order_sale = int(pk)
+            product = int(form.cleaned_data['product'].id)
+            quantity = int(form.cleaned_data['quantity'])
+            sale_price = float(form.cleaned_data['sale_price'])
+
+            # Ensure the user is authenticated
+            if request.user.is_authenticated:
+                # Get the token of the authenticated user
+                token, created = Token.objects.get_or_create(user=request.user)
+
+                # Prepare the payload for the API request
+                payload = {
+                    'order_sale':order_sale,
+                    'product': product,
+                    'quantity': quantity,
+                    'sale_price': sale_price,
+                }
+
+                # Define the API endpoint
+                api_endpoint = "http://localhost:8000/api/order-sale/sale-details/"
+
+                # Set up the headers, including the token for authorization
+                headers = {
+                    'Authorization': f'Token {token.key}',
+                    'Content-Type': 'application/json'
+                }
+
+                # Make the API request
+                response = requests.post(api_endpoint, json=payload, headers=headers)
+
+                # Check if the request was successful
+                if response.status_code == 201:
+                    # url = reverse('purchases')
+                    # print(f'Redirecting to: {url}')
+                    return redirect('detail-order-sale',pk=pk)
+                
+                else:
+                    print('API request failed:', response.text)
+            else:
+                print('User is not authenticated')
+                return redirect('login')  # Redirect to login if user is not authenticated
+        else:
+            print('Form is not valid')
+    else:
+        form = OrderSaleDetailForm()
+        
+
+    return render(request, 'add_order_detail_sale.html', {'form': form,'id_order':pk})
+
+@login_required(login_url='/login')
+def edit_order_detail_sale(request,pk,pk_order):
+    url = f"http://localhost:8000/api/order-sale/sale-details/{pk}/"
+
+    # Obtener el token del usuario autenticado
+    token, created = Token.objects.get_or_create(user=request.user)
+    headers = {
+        'Authorization': f'Token {token.key}',
+        'Content-Type': 'application/json'
+    }
+
+    if request.method == 'POST':
+        form = OrderSaleDetailForm(request.POST)
+        if form.is_valid():
+            # Extract data from form and convert to appropriate types
+            order_sale = int(pk_order)
+            product = int(form.cleaned_data['product'].id)
+            quantity = int(form.cleaned_data['quantity'])
+            sale_price = float(form.cleaned_data['sale_price'])
+
+            payload = {
+                'order_sale':order_sale,
+                'product': product,
+                'quantity': quantity,
+                'sale_price': sale_price,
+            }
+
+            # Realizar una solicitud PUT a la API para actualizar el producto
+            response = requests.put(url, json=payload, headers=headers)
+            if response.status_code == 200:
+                return redirect('detail-order-sale',pk=pk_order)
+            else:
+                print('API request failed:', response.text)
+        else:
+            print('Form is not valid')
+    else:
+        # Realizar una solicitud GET a la API para obtener los datos actuales del producto
+        try:
+            response = requests.get(url, headers=headers)
+            response.raise_for_status()
+            client_data = response.json()
+
+            # Inicializar el formulario con los datos actuales del producto
+            form = OrderSaleDetailForm(initial={
+                'product': client_data['product']['id'],
+                'quantity': client_data['quantity'],  
+                'sale_price': float(client_data['sale_price'])
+            })
+
+        except requests.exceptions.RequestException as req_err:
+            print(f"An error occurred: {req_err}")
+            return HttpResponse("An error occurred.", status=500)
+        except ValueError as val_err:
+            print(f"JSON decoding failed: {val_err}")
+            return HttpResponse("Error decoding JSON response.", status=500)
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+            return HttpResponse("An unexpected error occurred.", status=500)
+
+    return render(request, 'edit_order_detail_sale.html', {'form': form,'id_order': client_data['order_sale']})
+
+@login_required(login_url='/login')
+def delete_order_detail_sale(request,pk,pk_order):
+    url = f"http://localhost:8000/api/order-sale/sale-details/{pk}/"
+
+    try:
+        sale_detail = requests.delete(url)
+        sale_detail.raise_for_status() 
+
+        return redirect('detail-order-sale',pk=pk_order)
+    
+    except requests.exceptions.RequestException as req_err:
+        print(f"An error occurred: {req_err}")
+        return HttpResponse("An error occurred.", status=500)
+    
+    except ValueError as val_err:
+        print(f"JSON decoding failed: {val_err}")
+        return HttpResponse("Error decoding JSON response.", status=500)
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return HttpResponse("An unexpected error occurred.", status=500)
+
+@login_required(login_url='/login')
+def complete_order_sale(request,pk):
+    url=f"http://localhost:8000/api/order-sale/sale/{pk}/complete_order_sale/"
+
+    try:
+        purchase_detail = requests.post(url)
+        purchase_detail.raise_for_status() 
+
+        return redirect('detail-order-sale',pk=pk)
     
     except requests.exceptions.RequestException as req_err:
         print(f"An error occurred: {req_err}")

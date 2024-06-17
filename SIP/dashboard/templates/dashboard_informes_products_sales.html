@@ -14,7 +14,7 @@
         <div class="header_table">
             <div class="group_btn">
                 <div class="textos_left">
-                    <h2 class="title">Productos</h2>
+                    <h2 class="title">Productos historial de venta</h2>
                     <h2 class="subtitle">Haga click en un producto para ver el historial de registros de venta correspondiente</h2>
                 </div>
 
@@ -31,7 +31,7 @@
         </div>
 
         {% for producto in stock  %}
-            <a href="{% url 'detail-product' producto.product.id %}">
+            <a href="{% url 'reports-sale-by-product' pk=producto.product.id %}">
                 <div class="table_header">
                     <p class="td_product first_report">{{ producto.product.name | slice:":60" }}</p>
                     <p class="td_product third_report">{{producto.current_stock}}</p>

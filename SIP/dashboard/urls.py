@@ -4,7 +4,7 @@ from .views import proveedores_view,add_proveedor,detail_proveedor,delete_provee
 from .views import orders_purchase_view,add_order_purchase,detail_order_purchase,delete_order_purchase,add_order_detail_purchase,delete_order_detail_purchase,edit_order_detail_purchase,complete_order_purchase
 from .views import orders_sale_view,add_order_sale,detail_order_sale,delete_order_sale
 from .views import add_order_detail_sale,delete_order_detail_sale,edit_order_detail_sale,complete_order_sale
-from .views import informes_view,dashboard_products_sales,dashboard_products_purchase
+from .views import informes_view,dashboard_products_sales,dashboard_products_purchase,dashboard_products_sales_registry_detail,dashboard_products_purchases_registry_detail
 
 
 urlpatterns = [
@@ -12,6 +12,10 @@ urlpatterns = [
     path('reports', informes_view, name='reports'),
     path('reports-sales-products', dashboard_products_sales, name='reports-sales-products'),
     path('reports-purchase-products', dashboard_products_purchase, name='reports-purchase-products'),
+
+
+    path('reports-sale-by-product/<int:pk>', dashboard_products_sales_registry_detail, name='reports-sale-by-product'),
+    path('reports-purchase-by-product/<int:pk>', dashboard_products_purchases_registry_detail, name='reports-purchase-by-product'),
 
 
     

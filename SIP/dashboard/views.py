@@ -1126,11 +1126,90 @@ def dashboard_products_purchase(request):
 
 @login_required(login_url='/login')
 def dashboard_products_sales_registry_detail(request,pk):
-    url = "http://127.0.0.1:8000/api/inventory/stock/"
+    url_sale_by_product = f"http://127.0.0.1:8000/api/order-sale/sale-details/{pk}/order_sale_by_product/"
+    url_product = f"http://127.0.0.1:8000/api/inventory/products/{pk}"
 
-    # A GET request to the API
-    products_inventory = requests.get(url)
+    try:
+        sales_detail_by_products = requests.get(url_sale_by_product)
+        sales_detail_by_products.raise_for_status() 
 
-    # Print the response
-    products_inventory_json = products_inventory.json()
-    return render(request, 'dashboard_informes_products_sales.html',{'stock':products_inventory_json})
+        # Print the response
+        sales_detail_by_products_json = sales_detail_by_products.json()
+        try:
+            product_detail= requests.get(url_product)
+            product_detail.raise_for_status() 
+
+            # Print the response
+            product_detail_json = product_detail.json()
+
+            return render(request, 'dashboard_informes_products_sales_product.html', {'registry': sales_detail_by_products_json,'product':product_detail_json})
+
+        except requests.exceptions.RequestException as req_err:
+            print(f"An error occurred: {req_err}")
+            return HttpResponse("An error occurred.", status=500)
+    
+        except ValueError as val_err:
+            print(f"JSON decoding failed: {val_err}")
+            return HttpResponse("Error decoding JSON response.", status=500)
+
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+            return HttpResponse("An unexpected error occurred.", status=500)
+    
+    except requests.exceptions.RequestException as req_err:
+        print(f"An error occurred: {req_err}")
+        return HttpResponse("An error occurred.", status=500)
+    
+    except ValueError as val_err:
+        print(f"JSON decoding failed: {val_err}")
+        return HttpResponse("Error decoding JSON response.", status=500)
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return HttpResponse("An unexpected error occurred.", status=500)
+    
+
+@login_required(login_url='/login')
+def dashboard_products_purchases_registry_detail(request,pk):
+    url_sale_by_product = f"http://127.0.0.1:8000/api/order-purchase/purchase-detail/{pk}/order_purchase_by_product/"
+    url_product = f"http://127.0.0.1:8000/api/inventory/products/{pk}"
+
+    try:
+        sales_detail_by_products = requests.get(url_sale_by_product)
+        sales_detail_by_products.raise_for_status() 
+
+        # Print the response
+        sales_detail_by_products_json = sales_detail_by_products.json()
+        try:
+            product_detail= requests.get(url_product)
+            product_detail.raise_for_status() 
+
+            # Print the response
+            product_detail_json = product_detail.json()
+
+            return render(request, 'dashboard_informes_products_purchase_product.html', {'registry': sales_detail_by_products_json,'product':product_detail_json})
+
+        except requests.exceptions.RequestException as req_err:
+            print(f"An error occurred: {req_err}")
+            return HttpResponse("An error occurred.", status=500)
+    
+        except ValueError as val_err:
+            print(f"JSON decoding failed: {val_err}")
+            return HttpResponse("Error decoding JSON response.", status=500)
+
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+            return HttpResponse("An unexpected error occurred.", status=500)
+    
+    except requests.exceptions.RequestException as req_err:
+        print(f"An error occurred: {req_err}")
+        return HttpResponse("An error occurred.", status=500)
+    
+    except ValueError as val_err:
+        print(f"JSON decoding failed: {val_err}")
+        return HttpResponse("Error decoding JSON response.", status=500)
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return HttpResponse("An unexpected error occurred.", status=500)
+

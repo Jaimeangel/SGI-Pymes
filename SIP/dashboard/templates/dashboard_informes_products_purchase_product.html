@@ -1,0 +1,60 @@
+{% extends "dashboard.html" %}
+
+{% block title  %}
+    Registros por producto
+{% endblock  %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "inventory.css" %}">
+{% endblock  %}
+
+{% block content  %}
+    <div class="content_table">
+        <a href="{% url 'reports-purchase-products' %}">
+            <button class="btn">Regresar</button>
+        </a>
+        <div class="header_table">
+            <div class="box_detail">
+                <h2 class="title">Registros de compra</h2>
+    
+                <h2 class="subtitle">ID producto : {{product.id}}</h2>
+                <div class="box_detail">
+                    <p class="subtitle">Nombre del producto:</p>
+                    <h2 class="subtitle">{{product.name}}</h2>
+                </div>
+                <div class="box_detail">
+                    <p class="subtitle">Descripción:</p>
+                    <p class="subtitle">{{product.description}}</p>
+                </div>
+            </div>
+        </div>
+
+        {% if registry|length > 0 %}
+            <div class="table_header">
+                <p class="td supplier">ID orden de compra</p>
+                <p class="td fields">Cantidad</p>
+                <p class="td fields">Precio de compra</p>
+                <p class="td last_field final">Total</p>
+            </div>
+
+            {% for registro in registry  %}
+                <div class="table_header">
+                    <p class="td_product supplier">{{registro.order_supplier}}</p>
+                    <p class="td_product fields">{{registro.quantity}}</p>
+                    <p class="td_product fields">{{registro.purchase_price}}</p>
+                    <p class="td_product last_field final">{{registro.total_purchase}}</p>
+                </div>
+            {% endfor %}
+        
+        {% else %}
+            <div class="msg-empty">
+                <span>
+                    <i class='bx bxs-grid bx-lg'></i>
+                </span>
+                <h2 class="title">No hay registros para este producto</h2>
+            </div>       
+        {% endif %}
+
+    </div>
+{% endblock  %}

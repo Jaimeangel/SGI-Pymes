@@ -1,4 +1,5 @@
 .header_table{
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -112,4 +113,11 @@
     width: 50%;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+}
+
+.box_detail{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 15px;
 }

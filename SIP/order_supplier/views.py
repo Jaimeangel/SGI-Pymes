@@ -45,3 +45,15 @@ class OrderSupplierViewSet(viewsets.ModelViewSet):
 class OrderSupplierDetailViewSet(viewsets.ModelViewSet):
     queryset = OrderSupplierDetail.objects.all()
     serializer_class = OrderSupplierDetailSerializer
+
+    @action(detail=True, methods=['get'])
+    def order_purchase_by_product(self, request, pk=None):
+        # Filtrar los OrderSaleDetail por producto (pk es el ID del producto)
+        product_id = pk
+        order_purchase_details = OrderSupplierDetail.objects.filter(product__id=product_id)
+        
+        # Serializar los datos
+        serializer = self.get_serializer(order_purchase_details, many=True)
+        
+        # Devolver la respuesta
+        return Response(serializer.data)

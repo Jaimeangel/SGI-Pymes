@@ -1,0 +1,33 @@
+{% extends "dashboard.html" %}
+
+{% block title  %}
+    Informes
+{% endblock  %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "inventory.css" %}">
+{% endblock  %}
+
+{% block content  %}
+    <div class="content_table">
+        <div class="header_table">
+            <h2 class="title">Informes de ventas y compras</h2>
+        </div>
+
+        <div class="box_options">
+            <a class="box_lonely" href="{% url 'reports-sales-products' %}">
+                <div>
+                    <p class="subtitle">Registros de venta por producto</p>
+                </div>
+            </a>
+
+            <a class="box_lonely" href="{% url 'reports-purchase-products' %}">
+                <div>
+                    <p class="subtitle">Registros de compra por producto</p>
+                </div>
+            </a>
+            
+        </div>
+    </div>
+{% endblock  %}

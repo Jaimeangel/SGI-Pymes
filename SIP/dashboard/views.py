@@ -1095,3 +1095,42 @@ def complete_order_sale(request,pk):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return HttpResponse("An unexpected error occurred.", status=500)
+    
+
+# informes
+@login_required(login_url='/login')
+def informes_view(request):
+    return render(request, 'dashboard_informes.html')
+
+@login_required(login_url='/login')
+def dashboard_products_sales(request):
+    url = "http://127.0.0.1:8000/api/inventory/stock/"
+
+    # A GET request to the API
+    products_inventory = requests.get(url)
+
+    # Print the response
+    products_inventory_json = products_inventory.json()
+    return render(request, 'dashboard_informes_products_sales.html',{'stock':products_inventory_json})
+
+@login_required(login_url='/login')
+def dashboard_products_purchase(request):
+    url = "http://127.0.0.1:8000/api/inventory/stock/"
+
+    # A GET request to the API
+    products_inventory = requests.get(url)
+
+    # Print the response
+    products_inventory_json = products_inventory.json()
+    return render(request, 'dashboard_informes_products_purchase.html',{'stock':products_inventory_json})
+
+@login_required(login_url='/login')
+def dashboard_products_sales_registry_detail(request,pk):
+    url = "http://127.0.0.1:8000/api/inventory/stock/"
+
+    # A GET request to the API
+    products_inventory = requests.get(url)
+
+    # Print the response
+    products_inventory_json = products_inventory.json()
+    return render(request, 'dashboard_informes_products_sales.html',{'stock':products_inventory_json})

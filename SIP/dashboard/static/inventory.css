@@ -74,3 +74,42 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;   
 }
+
+
+.textos_left{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 15px;
+}
+
+.subtitle{
+	font-size: 20px;
+	font-weight: bold;
+	font-style: italic;
+	font-family: "Nunito", sans-serif;
+	text-align: center;
+}
+
+.title{
+	font-size: 30px;
+	font-weight: bold;
+	font-style: italic;
+	font-family: "Nunito", sans-serif;
+	text-align: center;
+}
+
+.first_report{
+    width: 50%;
+    border-right: none;
+    text-align: start;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.third_report{
+    width: 50%;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

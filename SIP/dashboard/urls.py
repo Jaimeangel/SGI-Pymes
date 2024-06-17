@@ -4,9 +4,16 @@ from .views import proveedores_view,add_proveedor,detail_proveedor,delete_provee
 from .views import orders_purchase_view,add_order_purchase,detail_order_purchase,delete_order_purchase,add_order_detail_purchase,delete_order_detail_purchase,edit_order_detail_purchase,complete_order_purchase
 from .views import orders_sale_view,add_order_sale,detail_order_sale,delete_order_sale
 from .views import add_order_detail_sale,delete_order_detail_sale,edit_order_detail_sale,complete_order_sale
+from .views import informes_view,dashboard_products_sales,dashboard_products_purchase
+
 
 urlpatterns = [
     path('dashboard', dashboard_home, name='dashboard-home'),
+    path('reports', informes_view, name='reports'),
+    path('reports-sales-products', dashboard_products_sales, name='reports-sales-products'),
+    path('reports-purchase-products', dashboard_products_purchase, name='reports-purchase-products'),
+
+
     
     path('inventory', inventory_view, name='inventory'),
     path('add-product', add_producto, name='add-product'),

@@ -1,0 +1,42 @@
+{% extends "dashboard.html" %}
+
+{% block title  %}
+    Productos sales
+{% endblock  %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "inventory.css" %}">
+{% endblock  %}
+
+{% block content  %}
+    <div class="content_table">
+        <div class="header_table">
+            <div class="group_btn">
+                <div class="textos_left">
+                    <h2 class="title">Productos</h2>
+                    <h2 class="subtitle">Haga click en un producto para ver el historial de registros de venta correspondiente</h2>
+                </div>
+
+                <a href="{% url 'reports' %}">
+                    <button class="btn">Regresar</button>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="table_header">
+            <p class="td first_report">Producto</p>
+            <p class="td third_report">Stock</p>
+        </div>
+
+        {% for producto in stock  %}
+            <a href="{% url 'detail-product' producto.product.id %}">
+                <div class="table_header">
+                    <p class="td_product first_report">{{ producto.product.name | slice:":60" }}</p>
+                    <p class="td_product third_report">{{producto.current_stock}}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock  %}

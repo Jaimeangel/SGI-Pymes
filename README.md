@@ -19,8 +19,7 @@ Antes de comenzar, asegúrate de tener instalados los siguientes componentes en 
 1. **Clona el repositorio del proyecto:**
 
     ```bash
-    git clone https://github.com/tu_usuario/tu_proyecto.git
-    cd tu_proyecto
+    git clone https://github.com/Jaimeangel/SGI-Pymes.git
     ```
 
 2. **Crea un entorno virtual:**

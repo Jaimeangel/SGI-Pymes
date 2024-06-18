@@ -1,6 +1,10 @@
-# Proyecto Django
+# Proyecto Django - Sistema de Gestión de Inventarios
 
-Este es un proyecto Django que utiliza un entorno virtual para la gestión de dependencias. A continuación, se proporcionan los pasos necesarios para configurar y ejecutar el entorno virtual, así como para instalar todas las dependencias necesarias utilizando el archivo `requirements.txt`.
+## Introducción
+
+Bienvenido al Sistema de Gestión de Inventarios, una solución desarrollada para pequeñas y medianas empresas. Este proyecto está diseñado para facilitar el seguimiento de productos, proveedores y pedidos. Con nuestro sistema, los usuarios podrán gestionar su inventario de manera eficiente, crear pedidos de compra y venta, y visualizar informes detallados de stock.
+
+Este repositorio contiene todo el código necesario para desplegar y ejecutar el sistema, junto con las instrucciones para configurar el entorno de desarrollo adecuado.
 
 ## Requisitos Previos
 
